@@ -5,5 +5,5 @@ import java.util.Map;
 
 public class MoG {
 
-        
+
 }
