@@ -15,12 +15,12 @@ public class MasterData {
         this.creditData = new HashMap<>();
     }
 
-    public String getRomanFormatOf(String data) throws Exception{
+    public String getRomanFormatOf(String data) throws NoSuchWordException{
         if(this.conversionData.containsKey(data)){
             return this.conversionData.get(data);
         }
         else {
-            throw new Exception("The Requested Word Doesn't Has Entry");
+            throw new NoSuchWordException(data+" Is not a Valid Word");
         }
     }
 
@@ -33,12 +33,16 @@ public class MasterData {
         this.creditData.put(metal,price);
     }
 
-    public Float getCreditData(String metal) throws Exception{
+    public Float getCreditData(String metal) throws NoSuchMetalException{
         if(this.creditData.containsKey(metal)){
             return this.creditData.get(metal);
         }
         else{
-            throw new  Exception("No such Metal Data Found");
+            throw new NoSuchMetalException("No such Metal Data Found");
         }
+    }
+
+    public boolean hasCreditData(String metal) {
+        return this.creditData.containsKey(metal);
     }
 }

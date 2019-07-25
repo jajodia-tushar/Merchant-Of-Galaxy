@@ -4,19 +4,12 @@ import java.util.regex.Pattern;
 
 public class CreditParser {
 
-    public String[] parse(String inputString) throws Exception{
-        if(matchPattern(inputString)){
-
+    public String[] parse(String inputString){
             String refinedString = replaceUnwantedWordsfromString(inputString);
             String interGalaticWords = getInterGalaticWordsFromSplits(refinedString);
             String metal = getMetalFromString(refinedString);
             String itemPrice = getPriceOfTheItem(refinedString);
-
             return new String[]{interGalaticWords,metal,itemPrice};
-        }
-        else{
-            throw new Exception("No Credit Information Found In String");
-        }
     }
 
     public boolean matchPattern(String inputString) {

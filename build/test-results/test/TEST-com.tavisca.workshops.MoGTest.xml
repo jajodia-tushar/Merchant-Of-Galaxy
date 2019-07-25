@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.tavisca.workshops.MoGTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-07-25T10:01:27" hostname="RENTLAPT0018" time="0.02">
+<testsuite name="com.tavisca.workshops.MoGTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2019-07-25T13:47:56" hostname="RENTLAPT0018" time="36.561">
   <properties/>
-  <testcase name="canParseQuestionStatement()" classname="com.tavisca.workshops.MoGTest" time="0.02"/>
-  <system-out><![CDATA[]]></system-out>
+  <testcase name="canThrowExceptionIfCreditInformationIsWrong()" classname="com.tavisca.workshops.MoGTest" time="36.561">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[Prok Is not a Valid Word
+]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
