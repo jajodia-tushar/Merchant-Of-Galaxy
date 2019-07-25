@@ -24,8 +24,21 @@ public class MasterData {
         }
     }
 
-    protected void saveConversionData(String[] data)
+    public void saveConversionData(String[] data)
     {
         conversionData.put(data[0],data[1]);
+    }
+
+    public void saveCreditData(String metal,Float price){
+        this.creditData.put(metal,price);
+    }
+
+    public Float getCreditData(String metal) throws Exception{
+        if(this.creditData.containsKey(metal)){
+            return this.creditData.get(metal);
+        }
+        else{
+            throw new  Exception("No such Metal Data Found");
+        }
     }
 }
