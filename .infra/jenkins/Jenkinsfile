@@ -9,8 +9,6 @@ pipeline {
 				echo $JAVA_HOME
 				
 				.\\gradlew.bat build
-				cd ..
-				@RD /S /Q Merchant-Galaxy-Problem
 '''
             }
         }
