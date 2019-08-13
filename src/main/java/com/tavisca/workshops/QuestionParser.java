@@ -14,7 +14,7 @@ public class QuestionParser {
             return reformedString.replace("how much is ","").split(" ");
         }
         else{
-            throw new QuestionUnParsableException("I Have No Idea What you are taking about");
+            throw new QuestionUnParsableException("I have no idea what you are talking about");
         }
     }
 }

@@ -12,6 +12,7 @@ public class MoG {
     CreditParser creditParser;
     QuestionParser questionParser;
     RomanToIntegerConverter romanToIntegerConverter;
+
     public MoG(){
         this.masterData = new MasterData();
         this.router = new Router();
@@ -21,30 +22,10 @@ public class MoG {
         this.romanToIntegerConverter = new RomanToIntegerConverter();
     }
 
-    static String string = "glob is I\n" +
-            "prok is V\n" +
-            "pish is X\n" +
-            "tegj is L\n" +
-            "glob glob Silver is 34 Credits\n" +
-            "glob prok Gold is 57800 Credits\n" +
-            "pish pish Iron is 3910 Credits\n" +
-            "how much is pish tegj glob glob ?\n" +
-            "how many Credits is glob prok Silver ?\n" +
-            "how many Credits is glob prok Gold ?\n" +
-            "how many Credits is glob prok Iron ?\n" +
-            "how much wood could a woodchuck chuck if a woodchuck could chuck wood ?";
-
-    public static void main(String[] args) {
-        MoG mog = new MoG();
-        mog.router(string);
-    }
-
-    private void router(String string) {
-
+    public void router(String string) {
         for(String line : string.split("\n")){
             lineRouter(line);
         }
-
     }
 
     public void lineRouter(String inputString){
@@ -58,50 +39,14 @@ public class MoG {
         Pattern questionPattern = Pattern.compile("how .* is .* ?");
         Matcher questionMatcher = questionPattern.matcher(inputString);
 
-
         if(wordMatcher.find()) {
-            String[] data = new WordParser().parse(inputString);
-            masterData.saveConversionData(data);
+            parseAndSaveWords(inputString);
         }
         else if(creditMatcher.find()){
-            try {
-                String[] data = new CreditParser().parse(inputString);
-                int integerValueOfWords = getRomanNumerials(data[0]);
-
-                Float unitPrice = Float.parseFloat(data[data.length-1])/integerValueOfWords;
-                String metalName = data[data.length - 2];
-
-                masterData.saveCreditData(metalName,unitPrice);
-
-            } catch (NoSuchWordException e) {
-                System.out.println(e.getMessage());
-            }
+            parseAndSaveCredit(inputString);
         }
         else if(questionMatcher.find()){
-            try {
-                String[] data = new QuestionParser().parse(inputString);
-                if(masterData.hasCreditData(data[data.length - 1])){
-
-                    Float unitPrice = masterData.getCreditData(data[data.length - 1]);
-
-                    int integralValue = getRomanNumerials(Arrays.copyOfRange(data,0,data.length-1));
-                    float finalPrice = unitPrice * integralValue;
-
-                    System.out.println(getStringRepresentationOfArray(data)+"is "+(int)finalPrice + " Credits");
-                }
-                else{
-                    int integralValue = getRomanNumerials(data);
-                    System.out.println(getStringRepresentationOfArray(data)+"is "+integralValue);
-                }
-            } catch (NoSuchWordException e) {
-                System.out.println(e.getMessage());
-            }
-            catch (QuestionUnParsableException e){
-                System.out.println(e.getMessage());
-            }
-            catch (NoSuchMetalException e){
-                System.out.println(e.getMessage());
-            }
+            parseAndAnswerQuestion(inputString);
         }
         else{
             System.out.println("I have no idea what you are talking about");
@@ -117,21 +62,78 @@ public class MoG {
         return string;
     }
 
-    public int getRomanNumerials(String data) throws NoSuchWordException{
+    public String getRomanNumerials(String data) throws NoSuchWordException{
 
         String romanNumerial = "";
         for(String word : data.split(" ")){
             romanNumerial += masterData.getRomanFormatOf(word);
         }
-        return this.romanToIntegerConverter.toInteger(romanNumerial);
+        return romanNumerial;
+//        return this.romanToIntegerConverter.toInteger(romanNumerial);
     }
 
-    public int getRomanNumerials(String[] data) throws NoSuchWordException{
+    public String getRomanNumerials(String[] data) throws NoSuchWordException{
 
         String romanNumerial = "";
         for(String word : data){
             romanNumerial += masterData.getRomanFormatOf(word);
         }
+        return romanNumerial;
+        //return this.romanToIntegerConverter.toInteger(romanNumerial);
+    }
+
+    public void parseAndSaveWords(String inputString){
+        String[] data = this.wordParser.parse(inputString);
+        masterData.saveConversionData(data);
+    }
+
+    public void parseAndSaveCredit(String inputString) {
+        try {
+            String[] data = this.creditParser.parse(inputString);
+            int integerValueOfWords = getTheIntegerValueFromRoman(getRomanNumerials(data[0]));
+
+            Float unitPrice = Float.parseFloat(data[data.length-1])/integerValueOfWords;
+            String metalName = data[data.length - 2];
+
+            masterData.saveCreditData(metalName,unitPrice);
+
+        } catch (NoSuchWordException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public String parseAndAnswerQuestion(String inputString) {
+        try {
+            String[] data = new QuestionParser().parse(inputString);
+            if(masterData.hasCreditData(data[data.length - 1])){
+
+                Float unitPrice = getTheValueOfMetalInCredits(data[data.length - 1]);
+
+                int integralValue = getTheIntegerValueFromRoman(getRomanNumerials(Arrays.copyOfRange(data,0,data.length-1)));
+                float finalPrice = unitPrice * integralValue;
+
+                return (getStringRepresentationOfArray(data)+"is "+(int)finalPrice + " Credits");
+            }
+            else{
+                int integralValue = getTheIntegerValueFromRoman(getRomanNumerials(data));
+                return (getStringRepresentationOfArray(data)+"is "+integralValue);
+            }
+        } catch (NoSuchWordException e) {
+            return (e.getMessage());
+        }
+        catch (QuestionUnParsableException e){
+            return (e.getMessage());
+        }
+        catch (NoSuchMetalException e){
+            return (e.getMessage());
+        }
+    }
+
+    public int getTheIntegerValueFromRoman(String romanNumerial){
         return this.romanToIntegerConverter.toInteger(romanNumerial);
+    }
+
+    public Float getTheValueOfMetalInCredits(String metal) throws NoSuchMetalException{
+        return this.masterData.getCreditData(metal);
     }
 }

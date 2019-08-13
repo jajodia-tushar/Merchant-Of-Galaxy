@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.tavisca.workshops.MoGTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2019-07-25T13:47:56" hostname="RENTLAPT0018" time="36.561">
+<testsuite name="com.tavisca.workshops.MoGTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2019-08-13T16:36:55" hostname="RENTLAPT0018" time="0.072">
   <properties/>
-  <testcase name="canThrowExceptionIfCreditInformationIsWrong()" classname="com.tavisca.workshops.MoGTest" time="36.561">
-    <skipped/>
-  </testcase>
-  <system-out><![CDATA[Prok Is not a Valid Word
-]]></system-out>
+  <testcase name="canAnswerNonSenseQuestions()" classname="com.tavisca.workshops.MoGTest" time="0.01"/>
+  <testcase name="canSaveCreditDetails()" classname="com.tavisca.workshops.MoGTest" time="0.004"/>
+  <testcase name="canSaveInterGalaticWords()" classname="com.tavisca.workshops.MoGTest" time="0.004"/>
+  <testcase name="canAnswerTypeOneQuestion()" classname="com.tavisca.workshops.MoGTest" time="0.003"/>
+  <testcase name="canAnwerTypeTwoQuestion()" classname="com.tavisca.workshops.MoGTest" time="0.015"/>
+  <testcase name="canConverInterGalaticSentencesToInteger()" classname="com.tavisca.workshops.MoGTest" time="0.004"/>
+  <testcase name="canThrowExceptionForMetalsThatHasNoData()" classname="com.tavisca.workshops.MoGTest" time="0.006"/>
+  <testcase name="canGetIntegerValueOfInterGalaticWords()" classname="com.tavisca.workshops.MoGTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
