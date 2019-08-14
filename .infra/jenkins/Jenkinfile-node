@@ -1,0 +1,12 @@
+pipeline {
+    agent {label "machine"}
+    stages {
+        stage('Example') {
+            steps {
+               bat label: '', script: '''
+				bat 'echo %PATH%'
+'''
+            }
+        }
+    }
+}
