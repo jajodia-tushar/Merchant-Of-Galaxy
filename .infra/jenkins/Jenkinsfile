@@ -21,7 +21,8 @@ pipeline {
             label: "Running Unit Test Cases"
             }
         }
-    post{
+	}
+	post{
         always{
             deleteDir()
         }
