@@ -3,9 +3,7 @@ pipeline {
     stages {
         stage('Example') {
             steps {
-               bat label: '', script: '''
-				bat 'echo %PATH%'
-'''
+               bat "bat 'echo %PATH%'"
             }
         }
     }
