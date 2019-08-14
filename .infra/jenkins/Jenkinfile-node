@@ -3,7 +3,14 @@ pipeline {
     stages {
         stage('Example') {
             steps {
-               bat "bat 'echo %PATH%'"
+            bat label: '', script: '''git clone https://github.com/tavisca-visharma/Merchant-Galaxy-Problem.git --branch build_job
+			cd Merchant-Galaxy-Problem
+			set JAVA_HOME="C:\\Program Files\\Java\\jdk-10"
+			echo $JAVA_HOME
+			.\\gradlew.bat build
+			cd ..
+@RD /S /Q Merchant-Galaxy-Problem
+'''
             }
         }
     }
