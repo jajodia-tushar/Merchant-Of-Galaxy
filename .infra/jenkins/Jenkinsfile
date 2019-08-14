@@ -6,7 +6,7 @@ pipeline {
                 sh script: '''
                     echo "I am in build step"
                     chmod +x gradlew
-                    ./gradlew build
+                    ./gradlew build -x test
                 ''',
             label: "Building Project"
             }
@@ -21,34 +21,6 @@ pipeline {
             label: "Running Unit Test Cases"
             }
         }
-        stage('Static Code Analysis')
-        {
-            steps {
-                sh script: '''
-                    echo "I am in Sonarqube scan"
-                ''',
-            label: "Running Sonarqube Scan"
-            }
-        }
-        stage('Build DockerImage')
-        {
-            steps {
-                sh script: '''
-                    echo "I am Building DockerImage ="
-                ''',
-            label: "Building Docker Image"
-            }
-        }
-        stage('Publish DockerImage')
-        {
-            steps {
-                sh script: '''
-                    echo "I am Pubishing DockerImage ="
-                ''',
-            label: "Publishing Docker Image"
-            }
-        }
-    }
     post{
         always{
             deleteDir()
